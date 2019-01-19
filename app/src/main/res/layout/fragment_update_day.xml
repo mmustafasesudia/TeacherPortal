@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Day"
+        android:textColor="@color/colorBlack"
+        android:textSize="18dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="20dp"
+        android:background="@color/colorBlack"></View>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <RadioButton
+            android:id="@+id/d1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mon to Wed"
+            android:textColor="@color/TextcolorGrey" />
+
+        <RadioButton
+            android:id="@+id/d2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wed to Fri"
+            android:textColor="@color/TextcolorGrey" />
+
+        <RadioButton
+            android:id="@+id/d4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mon to Fri"
+            android:textColor="@color/TextcolorGrey" />
+
+        <RadioButton
+            android:id="@+id/d3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sat - Sun"
+            android:textColor="@color/TextcolorGrey" />
+
+        <RadioButton
+            android:id="@+id/d5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="any day"
+            android:textColor="@color/TextcolorGrey" />
+
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_update_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/colorBlack"
+        android:text="Update Day"
+        android:textColor="@color/colorWhite" />
+
+
+</LinearLayout>

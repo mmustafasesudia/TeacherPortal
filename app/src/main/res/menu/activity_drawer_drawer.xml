@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_action_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_action_chat"
+            android:title="Chat" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_setting"
+            android:title="Setting" />
+
+        <item
+            android:id="@+id/nav_pdf_view"
+            android:visible="true"
+            android:icon="@drawable/ic_view_pdf"
+            android:title="Five Year" />
+
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Log Out" />
+        </menu>
+    </item>
+
+</menu>

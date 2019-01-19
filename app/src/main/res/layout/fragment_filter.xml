@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.hootsuite.nachos.NachoTextView
+                android:id="@+id/nacho_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Course"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Budget"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp" />
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/b1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Min to 1500"
+                        android:textColor="@color/TextcolorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/b2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1500 - 2500"
+                        android:textColor="@color/TextcolorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/b3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2500 and Above"
+                        android:textColor="@color/TextcolorGrey" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGrey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Timing"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp" />
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/t1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="10am to 12pm"
+                        android:textColor="@color/TextcolorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/t2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2pm to 4pm"
+                        android:textColor="@color/TextcolorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/t3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6pm to 9pm"
+                        android:textColor="@color/TextcolorGrey" />
+
+                    <RadioButton
+                        android:id="@+id/t4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="any time"
+                        android:textColor="@color/TextcolorGrey" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGrey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Days"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/d1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Mon to Wed"
+                            android:textColor="@color/TextcolorGrey" />
+
+                        <RadioButton
+                            android:id="@+id/d2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Wed to Fri"
+                            android:textColor="@color/TextcolorGrey" />
+
+                        <RadioButton
+                            android:id="@+id/d4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Mon to Fri"
+                            android:textColor="@color/TextcolorGrey" />
+
+                        <RadioButton
+                            android:id="@+id/d3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Sat - Sun"
+                            android:textColor="@color/TextcolorGrey" />
+
+                        <RadioButton
+                            android:id="@+id/d5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="any day"
+                            android:textColor="@color/TextcolorGrey" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="@null"
+                android:text="Cancel" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:background="@color/colorGrey" />
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@null"
+                android:text="OK" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

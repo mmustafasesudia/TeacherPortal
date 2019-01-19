@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1020860055998",
+    "firebase_url": "https://studentteacherorgapp.firebaseio.com",
+    "project_id": "studentteacherorgapp",
+    "storage_bucket": "studentteacherorgapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020860055998:android:88fbe6423be1c70c",
+        "android_client_info": {
+          "package_name": "com.android.tutorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020860055998-9h1r3k51h3s3jm3lg8lv9t4ll9mkeiod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.tutorapp",
+            "certificate_hash": "f3dfa1ad2da181c3c511ada91dd0f18428d06843"
+          }
+        },
+        {
+          "client_id": "1020860055998-fdk92blacp9m3ha130piq7066sbqshmm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRa0Ed5JebOgN--xy2u5TSo6cw2snW3f8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020860055998-fdk92blacp9m3ha130piq7066sbqshmm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

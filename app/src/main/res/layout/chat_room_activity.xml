@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chat_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFF">
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/circular_progress"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+
+    <ListView
+        android:id="@+id/chat_room_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/chat_room_bottomlayout"
+        android:layout_marginBottom="4dp"
+        android:background="#FFFF"
+        android:clipToPadding="false"
+        android:divider="@drawable/chat_divider"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:stackFromBottom="false"
+        android:transcriptMode="normal" />
+
+    <View
+        android:id="@+id/chat_room_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/chat_room_bottomlayout"
+        android:background="@color/colorBlack"></View>
+
+    <include
+        android:id="@+id/chat_room_bottomlayout"
+        layout="@layout/chat_room_activity_bottom_layout" />
+
+
+</RelativeLayout>

@@ -19,9 +19,14 @@
 
         <item
             android:id="@+id/nav_pdf_view"
-            android:visible="true"
             android:icon="@drawable/ic_view_pdf"
-            android:title="Five Year" />
+            android:title="Five Year"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_post_jobs"
+            android:icon="@drawable/ic_view_pdf"
+            android:title="Post Job"
+            android:visible="true" />
 
     </group>
 

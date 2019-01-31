@@ -27,6 +27,7 @@ public class ConfigURL {
     public static final String URL_STUDENT_REQUEST_ACCEPT = "http://" + HOST + "/Teacher_Portal/v1/requestaccept";
     public static final String URL_FORGOT_PASS = "http://" + HOST + "/Teacher_Portal/v1/forgotpass";
     public static final String URL_IS_PERSON_EXIST = "http://" + HOST + "/Teacher_Portal/v1/isPersonExistNumberCheck";
+    public static final String URL_POST_JOB = "http://" + HOST + "/Teacher_Portal/v1/job";
 
 
     public static String Filtercourse = "";

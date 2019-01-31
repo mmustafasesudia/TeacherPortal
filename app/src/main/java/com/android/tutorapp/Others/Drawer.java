@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.android.tutorapp.Chat.ChatFragment;
 import com.android.tutorapp.Chat.ChatRoomFragment;
+import com.android.tutorapp.JobPost;
 import com.android.tutorapp.Notification.MyFirebaseMessagingService;
 import com.android.tutorapp.Profile.StudentOrgProfile;
 import com.android.tutorapp.Profile.TutorProfileView;
@@ -114,12 +115,13 @@ public class Drawer extends AppCompatActivity
             //sender_num
             sendMessage("This is " + ConfigURL.getName(this), sender_num);
         }
-/*
 
         if (ConfigURL.getType(this).equals("STUDENT")) {
             hideItem();
         }
-*/
+        /*if (ConfigURL.getType(this).equals("ORGANIZATION")) {
+            hideItemPostJobs();
+        }*/
 
     }
 
@@ -186,6 +188,15 @@ public class Drawer extends AppCompatActivity
             Fragment PDFViewerListFragment = new PDFViewerListFragment();
             fragmentName = PDFViewerListFragment;
             FragmentReplace.replaceFragment(Drawer.this, fragmentName, R.id.fragment_container_drawer);
+        } else if (id == R.id.nav_post_jobs) {
+            if (ConfigURL.getType(this).equals("STUDENT")) {
+               /* Intent intent = new Intent(Drawer.this, PDFViewer.class);
+                startActivity(intent);*/
+            }
+            Fragment fragmentName = null;
+            Fragment PDFViewerListFragment = new JobPost();
+            fragmentName = PDFViewerListFragment;
+            FragmentReplace.replaceFragment(Drawer.this, fragmentName, R.id.fragment_container_drawer);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -239,6 +250,12 @@ public class Drawer extends AppCompatActivity
     private void hideItem() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_pdf_view).setVisible(false);
+        nav_Menu.findItem(R.id.nav_pdf_view).setVisible(true);
+    }
+
+    private void hideItemPostJobs() {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_post_jobs).setVisible(true);
     }
 }

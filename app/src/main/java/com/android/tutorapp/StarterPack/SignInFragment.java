@@ -202,12 +202,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
         Fragment fragmentName = null;
         Fragment SignUpInfoFragment = new SignUpInfoFragment();
+        Fragment ForgotPassword = new ForgotPassword();
 
         switch (view.getId()) {
             case R.id.btn_signin:
                 submit();
                 break;
             case R.id.tv_forgot_pass:
+                fragmentName = ForgotPassword;
+                FragmentReplace.replaceFragment(getActivity(), fragmentName, R.id.content_frame_signin);
                 break;
             case R.id.tv_new_account:
                 fragmentName = SignUpInfoFragment;

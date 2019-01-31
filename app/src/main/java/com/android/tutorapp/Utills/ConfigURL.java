@@ -25,6 +25,8 @@ public class ConfigURL {
     public static final String URL_SCHEDULE_BUDGET = "http://" + HOST + "/Teacher_Portal/v1/budget";
     public static final String URL_STUDENT_ORG_PROFILE_VIEW = "http://" + HOST + "/Teacher_Portal/v1/studentorgprofile/";
     public static final String URL_STUDENT_REQUEST_ACCEPT = "http://" + HOST + "/Teacher_Portal/v1/requestaccept";
+    public static final String URL_FORGOT_PASS = "http://" + HOST + "/Teacher_Portal/v1/forgotpass";
+    public static final String URL_IS_PERSON_EXIST = "http://" + HOST + "/Teacher_Portal/v1/isPersonExistNumberCheck";
 
 
     public static String Filtercourse = "";
@@ -41,7 +43,6 @@ public class ConfigURL {
         } else
             return "";
     }
-
 
 
     //Shared Prefernce
@@ -133,7 +134,7 @@ public class ConfigURL {
             return "";
     }
 
-//clear shared
+    //clear shared
     public static void clearshareprefrence(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("PREFRENCE", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

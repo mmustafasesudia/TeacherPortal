@@ -27,13 +27,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:visibility="gone"
             android:focusableInTouchMode="true"
             android:hint="Phone"
             android:imeOptions="actionNext"
             android:inputType="phone"
             android:maxLines="1"
-            android:textColorHint="@color/colorBlack" />
+            android:textColorHint="@color/colorBlack"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/et_input_email"
@@ -73,9 +73,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="15dp"
             android:text="Forgot Password ?"
-            android:textColor="@color/colorBlack"
-            android:visibility="gone" />
+            android:textColor="@color/colorBlack" />
 
 
     </LinearLayout>

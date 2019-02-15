@@ -23,6 +23,15 @@ public class ModelSearchTutor {
         this.t_image = t_image;
         this.t_distance = t_distance;
     }
+    public ModelSearchTutor(String t_name, String t_mobile_no, String t_rating, String t_image, String t_distance,String lat,String t_lng) {
+        this.t_name = t_name;
+        this.t_mobile_no = t_mobile_no;
+        this.t_rating = t_rating;
+        this.t_image = t_image;
+        this.t_distance = t_distance;
+        this.t_lat = lat;
+        this.t_lng = t_lng;
+    }
 
     public ModelSearchTutor(JSONObject jsonObject) {
         try {

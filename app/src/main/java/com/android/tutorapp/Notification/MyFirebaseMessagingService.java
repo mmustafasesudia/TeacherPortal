@@ -61,15 +61,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(getApplicationContext(), "notify_001");
         Intent ii = new Intent(getApplicationContext(), Drawer.class);
 
-        String msg, sender_num, msg_id, type;
+        String msg, sender_num, msg_id, type,time;
         msg_id = notificationObject.getString("msg_id");
         msg = notificationObject.getString("message");
         sender_num = notificationObject.getString("sender_num");
+        time = notificationObject.getString("time");
 
 
         ii.putExtra("msg_id", "" + msg_id);
         ii.putExtra("message", "" + msg);
         ii.putExtra("sender_num", "" + sender_num);
+        ii.putExtra("time", "" + time);
 
         Log.v("From : ", "Message : " + msg + " Request Id : " + msg_id + " Sender Number : " + sender_num);
 

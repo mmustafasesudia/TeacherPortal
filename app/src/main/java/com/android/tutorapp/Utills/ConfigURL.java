@@ -28,6 +28,10 @@ public class ConfigURL {
     public static final String URL_FORGOT_PASS = "http://" + HOST + "/Teacher_Portal/v1/forgotpass";
     public static final String URL_IS_PERSON_EXIST = "http://" + HOST + "/Teacher_Portal/v1/isPersonExistNumberCheck";
     public static final String URL_POST_JOB = "http://" + HOST + "/Teacher_Portal/v1/job";
+    public static final String URL_REQUEST = "http://" + HOST + "/Teacher_Portal/v1/requestjob";
+    public static final String URL_POST_FEEDBACK = "http://" + HOST + "/Teacher_Portal/v1/feedback";
+    public static final String URL_LIST_JOBS = "http://" + HOST + "/Teacher_Portal/v1/activejob";
+    public static final String URL_REQUEST_ACCEPT = "http://" + HOST + "/Teacher_Portal/v1/jobrequestaccept";
 
 
     public static String Filtercourse = "";

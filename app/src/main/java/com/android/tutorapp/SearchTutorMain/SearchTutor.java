@@ -223,8 +223,10 @@ public class SearchTutor extends Fragment implements View.OnClickListener, Swipe
                                 dist = active_tuitions.getT_distance();
                                 rating = active_tuitions.getT_rating();
                                 mobile = active_tuitions.getT_mobile_no();
+                                lat = active_tuitions.getT_lat();
+                                lng = active_tuitions.getT_lng();
 
-                                ModelSearchTutor obj = new ModelSearchTutor(instr, mobile, rating, image, dist);
+                                ModelSearchTutor obj = new ModelSearchTutor(instr, mobile, rating, image, dist,lat,lng);
                                 data.add(obj);
 
                             }

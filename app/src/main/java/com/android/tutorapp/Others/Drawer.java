@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.android.tutorapp.Chat.ChatFragment;
 import com.android.tutorapp.Chat.ChatRoomFragment;
+import com.android.tutorapp.FeedbackJob;
 import com.android.tutorapp.JobPost;
 import com.android.tutorapp.Notification.MyFirebaseMessagingService;
 import com.android.tutorapp.Profile.StudentOrgProfile;
@@ -82,17 +83,31 @@ public class Drawer extends AppCompatActivity
         String msg_id = "" + intent.getStringExtra("msg_id");
         String message = "" + intent.getStringExtra("message");
         String sender_num = "" + intent.getStringExtra("sender_num");
+        String time = "" + intent.getStringExtra("time");
 
         Log.v("From ", " " + msg_id + " " + message + " " + sender_num);
+        if (time != null && !time.isEmpty() && !time.equals("null")) {
+            Log.v("111111111111",""+message);
+            Fragment fragmentName = null;
+            Fragment RequestRecieved = new RequestRecieved();
+            Bundle bundle = new Bundle();
+            bundle.putString("msg_id", "" + msg_id);
+            bundle.putString("message", "" + message);
+            fragmentName = RequestRecieved;
+            fragmentName.setArguments(bundle);
+            FragmentReplace.replaceFragment(this, fragmentName, R.id.fragment_container_drawer);
+            MyFirebaseMessagingService.cancelNotification(this);
 
-        if (message == null || message.isEmpty() || message.equals("null")) {
+        } else if (message == null || message.isEmpty() || message.equals("null")) {
+            Log.v("2222222222222",""+message);
             Fragment fragmentName = null;
             Fragment SearchTutor = new SearchTutor();
             fragmentName = SearchTutor;
             FragmentReplace.replaceFragment(Drawer.this, fragmentName, R.id.fragment_container_drawer);
             MyFirebaseMessagingService.cancelNotification(this);
 
-        } else if (message != "null" && !message.equals("You have a request")) {
+        } else if (message != "null" && !message.equals("You have a request") && msg_id != null) {
+            Log.v("33333333333333",""+message);
             Fragment fragmentName = null;
             Fragment ChatRoomFragment = new ChatRoomFragment();
             Bundle bundle = new Bundle();
@@ -102,10 +117,12 @@ public class Drawer extends AppCompatActivity
             FragmentReplace.replaceFragment(this, fragmentName, R.id.fragment_container_drawer);
             MyFirebaseMessagingService.cancelNotification(this);
         } else if (message != "null" && message.equals("You have a request")) {
+            Log.v("4444444444444",""+message);
             Fragment fragmentName = null;
             Fragment RequestRecieved = new RequestRecieved();
             Bundle bundle = new Bundle();
             bundle.putString("msg_id", "" + msg_id);
+            bundle.putString("message", "" + message);
             fragmentName = RequestRecieved;
             fragmentName.setArguments(bundle);
             FragmentReplace.replaceFragment(this, fragmentName, R.id.fragment_container_drawer);
@@ -115,13 +132,15 @@ public class Drawer extends AppCompatActivity
             //sender_num
             sendMessage("This is " + ConfigURL.getName(this), sender_num);
         }
-
         if (ConfigURL.getType(this).equals("STUDENT")) {
-            hideItem();
+            hidePdfItem();
         }
-        /*if (ConfigURL.getType(this).equals("ORGANIZATION")) {
+        if (ConfigURL.getType(this).equals("TEACHER")) {
+            hideItemFeedbackJobs();
+        }
+        if (ConfigURL.getType(this).equals("ORGANIZATION")) {
             hideItemPostJobs();
-        }*/
+        }
 
     }
 
@@ -132,7 +151,14 @@ public class Drawer extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int fragments = getSupportFragmentManager().getBackStackEntryCount();
+            if (fragments == 1) {
+                finish();
+            } else if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -197,6 +223,15 @@ public class Drawer extends AppCompatActivity
             Fragment PDFViewerListFragment = new JobPost();
             fragmentName = PDFViewerListFragment;
             FragmentReplace.replaceFragment(Drawer.this, fragmentName, R.id.fragment_container_drawer);
+        } else if (id == R.id.nav_feedback_jobs) {
+            if (ConfigURL.getType(this).equals("STUDENT")) {
+               /* Intent intent = new Intent(Drawer.this, PDFViewer.class);
+                startActivity(intent);*/
+            }
+            Fragment fragmentName = null;
+            Fragment PDFViewerListFragment = new FeedbackJob();
+            fragmentName = PDFViewerListFragment;
+            FragmentReplace.replaceFragment(Drawer.this, fragmentName, R.id.fragment_container_drawer);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -247,7 +282,7 @@ public class Drawer extends AppCompatActivity
                 });
     }
 
-    private void hideItem() {
+    private void hidePdfItem() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_pdf_view).setVisible(true);
@@ -257,5 +292,11 @@ public class Drawer extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_post_jobs).setVisible(true);
+    }
+
+    private void hideItemFeedbackJobs() {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_feedback_jobs).setVisible(true);
     }
 }

@@ -26,7 +26,12 @@
             android:id="@+id/nav_post_jobs"
             android:icon="@drawable/ic_view_pdf"
             android:title="Post Job"
-            android:visible="true" />
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_feedback_jobs"
+            android:icon="@drawable/ic_view_pdf"
+            android:title="Feedback Job"
+            android:visible="false" />
 
     </group>
 

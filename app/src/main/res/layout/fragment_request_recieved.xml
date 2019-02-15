@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:id="@+id/tv_text"
         android:gravity="center"
         android:text="You have new request"
         android:textSize="24sp"

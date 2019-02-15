@@ -51,9 +51,19 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ModelSearchTutor current = arrayList.get(position);
         holder.tv_t_name.setText(current.getT_name());
-        holder.tv_contact.setText(current.getT_mobile_no());
-        holder.tv_t_address.setText("" + current.getT_address());
-        holder.tv_distance.setText(current.getT_distance());
+        if (ConfigURL.getType(acontext).equals("TEACHER")) {
+            holder.tv_contact.setText(current.getT_lng());
+        } else
+            holder.tv_contact.setText(current.getT_mobile_no());
+        if (ConfigURL.getType(acontext).equals("TEACHER")) {
+            holder.tv_t_address.setVisibility(View.VISIBLE);
+            holder.tv_t_address.setText("Last Date : " + current.getT_lat());
+        }
+        if (ConfigURL.getType(acontext).equals("TEACHER"))
+            holder.tv_distance.setVisibility(View.GONE);
+        else
+            holder.tv_distance.setText(current.getT_distance());
+
 
         String imagePath = current.getT_image();
 
@@ -108,10 +118,10 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
             tv_contact = v.findViewById(R.id.tv_contact);
             tv_distance = v.findViewById(R.id.tv_distance);
             btn_send_chat = v.findViewById(R.id.btn_send_chat);
-            if (ConfigURL.getType(acontext).equals("TEACHER")) {
+            if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
                 btn_send_chat.setText("Send Message");
             }
-            if (!ConfigURL.getType(acontext).equals("TEACHER")) {
+            if (ConfigURL.getType(acontext).equals("TEACHER") || ConfigURL.getType(acontext).equals("STUDENT")) {
                 btn_send_chat.setText("Send Request");
             }
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -146,11 +156,14 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
                 @Override
                 public void onClick(View v) {
                     ModelSearchTutor modelSearchTutor = arrayList.get(getAdapterPosition());
-                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
+                    if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
                         sendMessage(modelSearchTutor.getT_mobile_no(), "Hi, this is " + ConfigURL.getName(acontext) + "");
                     }
-                    if (!ConfigURL.getType(acontext).equals("TEACHER")) {
+                    if (ConfigURL.getType(acontext).equals("STUDENT")) {
                         sendRequest(modelSearchTutor.getT_mobile_no());
+                    }
+                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
+                        sendRequestToOrg(modelSearchTutor.getT_mobile_no(), modelSearchTutor.getT_address());
                     }
                 }
             });
@@ -168,7 +181,6 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
     public int getItemCount() {
         return arrayList.size();
     }
-
 
     public void replaceFragment(Fragment fragment, int frame) {
         String backStateName = fragment.getClass().getName();
@@ -221,6 +233,27 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         Toast.makeText(acontext, "Message Sent! ", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                    }
+                });
+    }
+
+    public void sendRequestToOrg(String teacher, String job_id) {
+        AndroidNetworking.post(ConfigURL.URL_SEND_REQUEST)
+                .addBodyParameter("teacher_mobile_no", ConfigURL.getMobileNumber(acontext))
+                .addBodyParameter("job_id", teacher)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        Toast.makeText(acontext, "Request Sent! ", Toast.LENGTH_SHORT).show();
 
                     }
 

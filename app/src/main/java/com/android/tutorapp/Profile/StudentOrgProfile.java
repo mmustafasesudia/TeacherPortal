@@ -125,9 +125,12 @@ public class StudentOrgProfile extends Fragment {
                                 lat = Double.parseDouble(jsonObject.getString("Latitude"));
                                 lng = Double.parseDouble(jsonObject.getString("Longitude"));
 
-                                address_lat_lng = getAddressNew(jsonObject.getString("Latitude"), jsonObject.getString("Longitude"));
-                                tv_address.setText("" + address_lat_lng);
+                                try {
+                                    address_lat_lng = getAddressNew(jsonObject.getString("Latitude"), jsonObject.getString("Longitude"));
+                                    tv_address.setText("" + address_lat_lng);
+                                } catch (NullPointerException ex) {
 
+                                }
 
                                 if (jsonObject.getString("Image").isEmpty()) {
                                     profile_image.setImageResource(R.drawable.icon_profile_pictures);

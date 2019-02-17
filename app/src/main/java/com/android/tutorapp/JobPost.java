@@ -129,10 +129,7 @@ public class JobPost extends Fragment {
                             if (error) {
                                 Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                             }
-                        } catch (
-                                JSONException e)
-
-                        {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }

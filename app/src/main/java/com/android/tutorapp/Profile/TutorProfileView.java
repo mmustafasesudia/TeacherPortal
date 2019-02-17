@@ -243,11 +243,14 @@ public class TutorProfileView extends Fragment {
                                 tv_qualification.setText("Qualification : " + tutorProfile.getQualification());
                                 tv_dob.setText("Date Of Birth : " + tutorProfile.dob);
                                 tv_gender.setText("Gender : " + tutorProfile.getGender());
+/*
                                 tv_address.setText("Address : " + getAddressNew(tutorProfile.getLat(), tutorProfile.getLng()));
-                                /*try {
-                                    tv_dob.setText("Date Of Birth : " + tutorProfile.getDob());
+*/
+                                try {
+                                    /*tv_dob.setText("Date Of Birth : " + tutorProfile.getDob());*/
+                                    tv_address.setText("Address : " + getAddressNew(tutorProfile.getLat(), tutorProfile.getLng()));
                                 } catch (NullPointerException ex) {
-                                }*/
+                                }
                                 /*if (tutorProfile.getDob().equals("") || tutorProfile.getDob() == null || tutorProfile.getDob() == "null") {
                                     tutorProfile.setDob("01 Jan 2018");
                                     dob = tutorProfile.getDob().split("\\s+");

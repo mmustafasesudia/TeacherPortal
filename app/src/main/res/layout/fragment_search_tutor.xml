@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <com.hootsuite.nachos.NachoTextView
             android:id="@+id/nacho_text_view"
@@ -20,14 +20,25 @@
             android:singleLine="true"
             android:visibility="gone" />
 
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Job Search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:text="Search here."
             android:textSize="20sp"
-            android:text="Search here." />
-
+            android:visibility="gone" />
 
 
     </LinearLayout>

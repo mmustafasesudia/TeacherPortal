@@ -16,11 +16,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.tutorapp.R;
 import com.android.tutorapp.Utills.ConfigURL;
@@ -45,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.support.constraint.Constraints.TAG;
 import static com.android.tutorapp.Utills.ConfigURL.Filterbudget;
 import static com.android.tutorapp.Utills.ConfigURL.Filtercourse;
 import static com.android.tutorapp.Utills.ConfigURL.Filterday;
@@ -69,6 +74,7 @@ public class SearchTutor extends Fragment implements View.OnClickListener, Swipe
     RecyclerView rv;
     Geocoder geocoder;
     List<Address> addresses;
+    EditText et_search;
 
 
     public SearchTutor() {
@@ -100,13 +106,31 @@ public class SearchTutor extends Fragment implements View.OnClickListener, Swipe
         }
         getActivity().setTitle("Home");
 
-        rv = (RecyclerView) view.findViewById(R.id.rv_orders);
+        rv = view.findViewById(R.id.rv_orders);
         rv.setHasFixedSize(true);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.contentView);
+        mSwipeRefreshLayout = view.findViewById(R.id.contentView);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         nachoTextView = view.findViewById(R.id.nacho_text_view);
+        et_search = view.findViewById(R.id.et_search);
         tv_search = view.findViewById(R.id.tv_search);
+        if (ConfigURL.getType(getActivity()).equals("TEACHER")) {
+            et_search.setVisibility(View.VISIBLE);
+        } else if (ConfigURL.getType(getActivity()).equals("STUDENT")) {
+            tv_search.setVisibility(View.VISIBLE);
+        }
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    Log.v(TAG, "Enter pressed");
+                    if (!et_search.getText().toString().isEmpty())
+                        loadDataSearchByJobTitile(et_search.getText().toString());
+                    else
+                        Toast.makeText(getActivity(), "Please Enter Job Title", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,7 +250,7 @@ public class SearchTutor extends Fragment implements View.OnClickListener, Swipe
                                 lat = active_tuitions.getT_lat();
                                 lng = active_tuitions.getT_lng();
 
-                                ModelSearchTutor obj = new ModelSearchTutor(instr, mobile, rating, image, dist,lat,lng);
+                                ModelSearchTutor obj = new ModelSearchTutor(instr, mobile, rating, image, dist, lat, lng);
                                 data.add(obj);
 
                             }
@@ -433,6 +457,66 @@ public class SearchTutor extends Fragment implements View.OnClickListener, Swipe
         address = addresses.get(0).getAddressLine(0);
 
         return address;
+    }
+
+
+    public void loadDataSearchByJobTitile(String job_title) {
+        ProgressDialogClass.showProgress(getActivity());
+        AndroidNetworking.get(ConfigURL.URL_GET_SEARCH_JOB)
+                .addQueryParameter("jobtitle", job_title)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        refreshItems();
+                        data = new ArrayList<>();
+                        Log.v("AA Response", "" + response);
+
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("jobs");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                String instr, image, dist, rating, mobile, known, lat, lng;
+
+                                /*ModelSearchTutor active_tuitions = new ModelSearchTutor(jsonArray.getJSONObject(i));
+                                 */
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                instr = jsonObject.getString("Job Title");
+                                image = jsonObject.getString("Job Title");
+                                dist = jsonObject.getString("Job_id");
+                                rating = jsonObject.getString("Job_id");
+                                mobile = jsonObject.getString("Mobile");
+                                lat = jsonObject.getString("Last Date For Apply");
+                                lng = jsonObject.getString("Job Description");
+
+                                ModelSearchTutor obj = new ModelSearchTutor(instr, mobile, rating, image, dist, lat, lng);
+                                data.add(obj);
+
+                            }
+                            AdapterSearchTuition adapter = new AdapterSearchTuition(getActivity(), data);
+                            rv.setAdapter(adapter);
+                            //adapter.setClickListener(SearchTutor.this);
+
+
+                        } catch (JSONException e) {
+                            refreshItems();
+                            e.printStackTrace();
+                        }
+                        ProgressDialogClass.hideProgress();
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        //refreshItems();
+                        ProgressDialogClass.hideProgress();
+
+                    }
+                });
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(llm);
     }
 
 

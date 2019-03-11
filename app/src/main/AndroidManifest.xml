@@ -64,7 +64,8 @@
         <activity
             android:name=".Profile.ProfileViewFromChat"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Others.PDFViewer"></activity>
+        <activity android:name=".Others.PDFViewer" />
+        <activity android:name=".FeedbackActivity"></activity>
     </application>
 
 </manifest>

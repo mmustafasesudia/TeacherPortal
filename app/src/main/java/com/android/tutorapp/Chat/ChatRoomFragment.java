@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.tutorapp.FeedbackActivity;
 import com.android.tutorapp.Profile.ProfileViewFromChat;
 import com.android.tutorapp.R;
 import com.android.tutorapp.Utills.ConfigURL;
@@ -48,6 +49,9 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
     private boolean side = false;
     String phone, name;
     ProgressView circularProgressBar;
+    private boolean feedbackIsTaken = false;
+    private String teacher_num = "";
+
 
     public Dialog d;
 
@@ -61,9 +65,8 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.chat_room_activity, container, false);
 
-        if (ConfigURL.getType(getActivity()).equals("TEACHER")) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(true);
+
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -77,11 +80,11 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
         }
 
 
-        circularProgressBar = (ProgressView) view.findViewById(R.id.circular_progress);
+        circularProgressBar = view.findViewById(R.id.circular_progress);
 
-        chat_room_btn_send = (Button) view.findViewById(R.id.chat_room_btn_send);
-        chat_room_list_view = (ListView) view.findViewById(R.id.chat_room_list_view);
-        chat_room_et_message = (EditText) view.findViewById(R.id.chat_room_et_message);
+        chat_room_btn_send = view.findViewById(R.id.chat_room_btn_send);
+        chat_room_list_view = view.findViewById(R.id.chat_room_list_view);
+        chat_room_et_message = view.findViewById(R.id.chat_room_et_message);
         chat_room_adapter = new ChatRoomAdapter(getActivity(), R.layout.chat_incoming_msg);
         chat_room_list_view.setAdapter(chat_room_adapter);
 
@@ -113,8 +116,8 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
         return true;
     }
 
-    private boolean showAllMessage(Boolean side, String msg, String date) {
-        chat_room_adapter.add(new ChatMessage(side, msg, date));
+    private boolean showAllMessage(Boolean side, String msg, String date, String feedbackGiven) {
+        chat_room_adapter.add(new ChatMessage(side, msg, date, feedbackGiven));
         return true;
     }
 
@@ -159,6 +162,7 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.v("RESP", "" + response);
                         // do anything with response
                         circularProgressBar.stop();
                         try {
@@ -172,15 +176,22 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
                                 String time = commentsObj.getJSONObject(i).getString("time");
                                 String senderPhoneNo = commentsObj.getJSONObject(i).getString("sender_num");
                                 String msgId = commentsObj.getJSONObject(i).getString("message_id");
-                               // Log.v("HHHHHHH", "" + msg);
+                                String feedbackGiven = commentsObj.getJSONObject(i).getString("feedbackexist");
+                                // Log.v("HHHHHHH", "" + msg);
 
+                                feedbackIsTaken = !feedbackGiven.equals("No");
+                                if (ConfigURL.getType(getActivity()).equals("STUDENT")) {
+                                    if (!senderPhoneNo.equals(ConfigURL.getMobileNumber(getActivity()))) {
+                                        teacher_num = senderPhoneNo;
+                                    }
+                                }
 
                                 //Number Self False
                                 //Number Other True
                                 if (senderPhoneNo.equals(ConfigURL.getMobileNumber(getActivity())) && !msg.equals("null")) {
-                                    showAllMessage(false, msg, time);
+                                    showAllMessage(false, msg, time, feedbackGiven);
                                 } else if (!senderPhoneNo.equals(ConfigURL.getMobileNumber(getActivity())) && !msg.equals("null")) {
-                                    showAllMessage(true, msg, time);
+                                    showAllMessage(true, msg, time, feedbackGiven);
                                 }
                                 //TODO View chat messages
 
@@ -259,6 +270,19 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if (ConfigURL.getType(getActivity()).equals("TEACHER")) {
+            menu.findItem(R.id.action_view_profile).setVisible(true);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
+        if (ConfigURL.getType(getActivity()).equals("STUDENT")) {
+            menu.findItem(R.id.action_feedback).setVisible(true);
+            menu.findItem(R.id.action_view_profile).setVisible(false);
+        }
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -268,15 +292,26 @@ public class ChatRoomFragment extends Fragment implements View.OnClickListener {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_view_profile) {
 
-            Intent intent = new Intent(getActivity(),ProfileViewFromChat.class);
-            intent.putExtra("type","view");
-            intent.putExtra("mobile",phone);
+            Intent intent = new Intent(getActivity(), ProfileViewFromChat.class);
+            intent.putExtra("type", "view");
+            intent.putExtra("mobile", phone);
             startActivity(intent);
 
             return true;
         }
+        if (id == R.id.action_feedback) {
+            if (feedbackIsTaken) {
+                Toast.makeText(getActivity(), "Feedback Already Submitted", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getActivity(), FeedbackActivity.class);
+                intent.putExtra("num", "" + teacher_num);
+                startActivity(intent);
+                //Toast.makeText(getActivity(), "Hello Feedback", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

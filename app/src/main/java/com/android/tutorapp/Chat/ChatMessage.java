@@ -13,6 +13,19 @@ public class ChatMessage {
     public String name;
     public String date;
     public String withdraw;
+    public String feedbackGiven;
+
+    public ChatMessage(boolean left, String message, String date, String feedbackGiven) {
+        super();
+        this.left = left;
+        this.message = message;
+        this.date = date;
+        this.feedbackGiven = feedbackGiven;
+    }
+
+    public String getFeedbackGiven() {
+        return feedbackGiven;
+    }
 
     public String getWithdraw() {
         return withdraw;
@@ -50,6 +63,9 @@ public class ChatMessage {
         this.withdraw = withdraw;
     }
 
+    public void setFeedbackGiven(String feedbackGiven) {
+        this.feedbackGiven = feedbackGiven;
+    }
     public ChatMessage(boolean left, String message, String date) {
         super();
         this.left = left;

@@ -33,13 +33,18 @@ public class ConfigURL {
     public static final String URL_POST_FEEDBACK = "http://" + HOST + "/Teacher_Portal/v1/feedback";
     public static final String URL_LIST_JOBS = "http://" + HOST + "/Teacher_Portal/v1/activejob";
     public static final String URL_REQUEST_ACCEPT = "http://" + HOST + "/Teacher_Portal/v1/jobrequestaccept";
+    public static final String URL_FEEDBACK_STUDENT = "http://" + HOST + "/Teacher_Portal/v1/feedbackstudent";
 
 
     public static String Filtercourse = "";
     public static String Filtertime = "";
     public static String Filterday = "";
     public static String Filterbudget = "";
-    public static String[] suggestions = new String[]{"Chemistry", "Biology", "Math", "Physics", "English", "Urdu", "Science", "Computer", "Zoology"};
+    public static String[] suggestions = new String[]{"Chemistry Class 9th", "Biology Class 10th",
+            "Math Class 5th", "Math Class 9th", "Math Class 10th",
+            "English Class 5th", "Urdu Class 4rth",
+            "Science Class 5th", "Computer Class 8th",
+            "Chemistry Class 10th"};
 
 
     public static String getLoginState(Context context) {

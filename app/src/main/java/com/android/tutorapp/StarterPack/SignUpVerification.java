@@ -110,10 +110,10 @@ public class SignUpVerification extends Fragment implements View.OnClickListener
         }
 
 
-        mVerificationField = (EditText) rootView.findViewById(R.id.input_pin_code);
-        countDown = (TextView) rootView.findViewById(R.id.countDown);
-        verify = (Button) rootView.findViewById(R.id.btn_verify);
-        resend = (Button) rootView.findViewById(R.id.btn_resend);
+        mVerificationField = rootView.findViewById(R.id.input_pin_code);
+        countDown = rootView.findViewById(R.id.countDown);
+        verify = rootView.findViewById(R.id.btn_verify);
+        resend = rootView.findViewById(R.id.btn_resend);
 
 
         verify.setOnClickListener(this);
@@ -280,7 +280,6 @@ public class SignUpVerification extends Fragment implements View.OnClickListener
                             error = response.getBoolean("error");
                             if (error) {
                                 Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                                FirebaseAuth.getInstance().signOut();
                             }
                             if (!error) {
                                 Intent intent = new Intent(getActivity(), Drawer.class);
@@ -293,10 +292,12 @@ public class SignUpVerification extends Fragment implements View.OnClickListener
                                 editor.putString("TYPE", type);
                                 editor.commit();
                                 Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        FirebaseAuth.getInstance().signOut();
 
                     }
 

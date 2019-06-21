@@ -99,82 +99,25 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
         return vh;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public void sendRequestToOrg(String teacher, String job_id) {
+        AndroidNetworking.post(ConfigURL.URL_REQUEST)
+                .addBodyParameter("teacher_mobile_no", ConfigURL.getMobileNumber(acontext))
+                .addBodyParameter("job_id", teacher)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        Toast.makeText(acontext, "Request Sent! ", Toast.LENGTH_SHORT).show();
 
-        public CardView mCardView;
-        public TextView tv_t_name, tv_contact, tv_t_address, tv_distance;
-        RatingBar ratingBar;
-        public ImageView profile_image;
-        private Button btn_send_chat;
-
-        public MyViewHolder(View v) {
-            super(v);
-
-            mCardView = (CardView) v.findViewById(R.id.card_view_tuition_completed);
-            tv_t_name = v.findViewById(R.id.tv_t_name);
-            ratingBar = v.findViewById(R.id.tv_rating_tutor);
-            tv_t_address = v.findViewById(R.id.tv_t_address);
-            profile_image = v.findViewById(R.id.profile_image);
-            tv_contact = v.findViewById(R.id.tv_contact);
-            tv_distance = v.findViewById(R.id.tv_distance);
-            btn_send_chat = v.findViewById(R.id.btn_send_chat);
-            if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
-                btn_send_chat.setText("Send Message");
-            }
-            if (ConfigURL.getType(acontext).equals("TEACHER") || ConfigURL.getType(acontext).equals("STUDENT")) {
-                btn_send_chat.setText("Send Request");
-            }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(acontext, "", Toast.LENGTH_SHORT).show();
-                    ModelSearchTutor modelSearchTutor = arrayList.get(getAdapterPosition());
-                    if (!ConfigURL.getType(acontext).equals("TEACHER")) {
-                        Fragment fragmentName = null;
-                        Fragment TutorProfileView = new TutorProfileView();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("type", "view");
-                        bundle.putString("tutorMobile", modelSearchTutor.getT_mobile_no());
-                        fragmentName = TutorProfileView;
-                        fragmentName.setArguments(bundle);
-                        replaceFragment(fragmentName, R.id.fragment_container_drawer);
                     }
-                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
-                        Fragment fragmentName = null;
-                        Fragment StudentOrgProfile = new StudentOrgProfile();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("type", "view");
-                        bundle.putString("mobile", modelSearchTutor.getT_mobile_no());
-                        fragmentName = StudentOrgProfile;
-                        fragmentName.setArguments(bundle);
-                        replaceFragment(fragmentName, R.id.fragment_container_drawer);
-                    }
-                }
-            });
 
-            btn_send_chat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ModelSearchTutor modelSearchTutor = arrayList.get(getAdapterPosition());
-                    if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
-                        sendMessage(modelSearchTutor.getT_mobile_no(), "Hi, this is " + ConfigURL.getName(acontext) + "");
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
                     }
-                    if (ConfigURL.getType(acontext).equals("STUDENT")) {
-                        sendRequest(modelSearchTutor.getT_mobile_no());
-                    }
-                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
-                        sendRequestToOrg(modelSearchTutor.getT_mobile_no(), modelSearchTutor.getT_address());
-                    }
-                }
-            });
-            //itemView.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
-        }
+                });
     }
 
     @Override
@@ -243,25 +186,82 @@ public class AdapterSearchTuition extends RecyclerView.Adapter<AdapterSearchTuit
                 });
     }
 
-    public void sendRequestToOrg(String teacher, String job_id) {
-        AndroidNetworking.post(ConfigURL.URL_SEND_REQUEST)
-                .addBodyParameter("teacher_mobile_no", ConfigURL.getMobileNumber(acontext))
-                .addBodyParameter("job_id", teacher)
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        Toast.makeText(acontext, "Request Sent! ", Toast.LENGTH_SHORT).show();
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-                    }
+        public CardView mCardView;
+        public TextView tv_t_name, tv_contact, tv_t_address, tv_distance;
+        RatingBar ratingBar;
+        public ImageView profile_image;
+        private Button btn_send_chat;
 
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
+        public MyViewHolder(View v) {
+            super(v);
+
+            mCardView = v.findViewById(R.id.card_view_tuition_completed);
+            tv_t_name = v.findViewById(R.id.tv_t_name);
+            ratingBar = v.findViewById(R.id.tv_rating_tutor);
+            tv_t_address = v.findViewById(R.id.tv_t_address);
+            profile_image = v.findViewById(R.id.profile_image);
+            tv_contact = v.findViewById(R.id.tv_contact);
+            tv_distance = v.findViewById(R.id.tv_distance);
+            btn_send_chat = v.findViewById(R.id.btn_send_chat);
+            if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
+                btn_send_chat.setText("Send Message");
+            }
+            if (ConfigURL.getType(acontext).equals("TEACHER") || ConfigURL.getType(acontext).equals("STUDENT")) {
+                btn_send_chat.setText("Send Request");
+            }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(acontext, "", Toast.LENGTH_SHORT).show();
+                    ModelSearchTutor modelSearchTutor = arrayList.get(getAdapterPosition());
+                    if (!ConfigURL.getType(acontext).equals("TEACHER")) {
+                        Fragment fragmentName = null;
+                        Fragment TutorProfileView = new TutorProfileView();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type", "view");
+                        bundle.putString("tutorMobile", modelSearchTutor.getT_mobile_no());
+                        fragmentName = TutorProfileView;
+                        fragmentName.setArguments(bundle);
+                        replaceFragment(fragmentName, R.id.fragment_container_drawer);
                     }
-                });
+                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
+                        Fragment fragmentName = null;
+                        Fragment StudentOrgProfile = new StudentOrgProfile();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type", "view");
+                        bundle.putString("mobile", modelSearchTutor.getT_mobile_no());
+                        fragmentName = StudentOrgProfile;
+                        fragmentName.setArguments(bundle);
+                        replaceFragment(fragmentName, R.id.fragment_container_drawer);
+                    }
+                }
+            });
+
+            btn_send_chat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ModelSearchTutor modelSearchTutor = arrayList.get(getAdapterPosition());
+                    if (ConfigURL.getType(acontext).equals("ORGANIZATION")) {
+                        sendMessage(modelSearchTutor.getT_mobile_no(), "Hi, this is " + ConfigURL.getName(acontext) + "");
+                    }
+                    if (ConfigURL.getType(acontext).equals("STUDENT")) {
+                        sendRequest(modelSearchTutor.getT_mobile_no());
+                    }
+                    if (ConfigURL.getType(acontext).equals("TEACHER")) {
+                        sendRequestToOrg(modelSearchTutor.getT_mobile_no(), modelSearchTutor.getT_address());
+                    }
+                }
+            });
+            //itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
+        }
     }
 
 
